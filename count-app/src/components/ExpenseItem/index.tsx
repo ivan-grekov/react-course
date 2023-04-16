@@ -1,8 +1,9 @@
 import React from "react";
 import "./ExpenseItem.scss";
-// import { expenseDate, expenseTitle, expenseAmount } from "../../static/data";
+import ExpenseDate from "../ExpenseDate";
+import Card from "../UI/Card";
 
-interface ExpenseProps {
+export interface ExpenseProps {
   id: string;
   title: string;
   amount: number;
@@ -10,22 +11,19 @@ interface ExpenseProps {
 }
 
 const ExpenseItem: React.FC<ExpenseProps> = ({ title, amount, date }) => {
-  const month = date.toLocaleString("en-US", { month: "long" });
-  const year = date.getFullYear();
-  const day = date.toLocaleString("en-US", { day: "2-digit" });
+  const [currentTitle, setCurrentTitle] = React.useState(title);
+  const clickHandler = () => setCurrentTitle("Updated!");
 
   return (
-    <div className="expense-item">
-      <div>
-        <div>{month}</div>
-        <div>{year}</div>
-        <div>{day}</div>
-      </div>
-      <div className="expense-item__description">
-        <h2>{title}</h2>
-        <div className="expense-item__price">${amount}</div>
-      </div>
-    </div>
+    <li>
+      <Card className="expense-item">
+        <ExpenseDate date={date} />
+        <div className="expense-item__description">
+          <h2>{currentTitle}</h2>
+          <div className="expense-item__price">${amount}</div>
+        </div>
+      </Card>
+    </li>
   );
 };
 
