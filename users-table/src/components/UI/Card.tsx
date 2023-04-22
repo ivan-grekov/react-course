@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css";
 
-const Card: React.FC<{ children: React.ReactNode; className: string }> = ({
+const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({
   children,
   className,
 }) => {
