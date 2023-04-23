@@ -13,7 +13,8 @@ const UsersList: React.FC<{ users: IUser[] }> = ({ users }) => {
       <ul>
         {users.map((user, id) => (
           <li key={id}>
-            {user.userName} ({user.userAge} years old)
+            {user.userName} {user.userAge}
+            {user.userName.length > 1 && "years old"}
           </li>
         ))}
       </ul>
