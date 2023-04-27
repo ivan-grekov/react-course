@@ -1,14 +1,21 @@
 import React from "react";
 
 import classes from "./Button.module.css";
-
-const Button: React.FC<{
+interface IButton {
   type: "submit" | "button" | "reset" | undefined;
-  onClick?: () => void;
+  onClick: () => void;
   disabled: boolean;
   className: string;
   children: React.ReactNode;
-}> = ({ type, onClick, disabled, className, children }) => {
+}
+
+const Button: React.FC<Partial<IButton>> = ({
+  type,
+  onClick,
+  disabled,
+  className,
+  children,
+}) => {
   return (
     <button
       type={type || "button"}
