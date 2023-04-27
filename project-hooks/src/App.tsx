@@ -1,26 +1,18 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useContext } from "react";
 import "./App.css";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./store/AuthContext";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-  const loginHandler = (email: string, password: string) => {
-    setIsLoggedIn(true);
-  };
-
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-  };
+  const ctx = useContext(AuthContext);
   return (
     <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <MainHeader />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home />}
       </main>
     </React.Fragment>
   );
