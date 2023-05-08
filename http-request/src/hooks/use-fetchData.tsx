@@ -25,7 +25,7 @@ const useFetchData = () => {
     setIsLoading(false);
   }, []);
 
-  const addMovieHandler = async (movie: Partial<IMovie>) => {
+  const addMovieHandler = useCallback(async (movie: Partial<IMovie>) => {
     try {
       const { data } = await axios({
         method: "POST",
@@ -39,7 +39,7 @@ const useFetchData = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (fetchMovies) getMoviesHandler();
