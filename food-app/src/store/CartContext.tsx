@@ -9,7 +9,7 @@ interface ICartMeal {
 }
 
 interface IAction {
-  type: "ADD" | "REMOVE";
+  type: "ADD" | "REMOVE" | "CLEAR";
   item: ICartMeal;
   id: string;
 }
@@ -68,6 +68,11 @@ export const cartReducer = (
       totalAmount: updatedTotalAmount,
     };
   }
+
+  if (action.type === "CLEAR") {
+    return defaultCartState;
+  }
+
   return defaultCartState;
 };
 
@@ -79,6 +84,7 @@ const CartContext = React.createContext({
   isCartIsShown: false,
   onShowCart: () => {},
   onHideCart: () => {},
+  clearCart: () => {},
 });
 
 export const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -96,8 +102,7 @@ export const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const hideCartHandler = () => {
-    if (window.confirm("Are you sure want to close cart?"))
-      setCartIsShown(false);
+    setCartIsShown(false);
   };
 
   const addItemToCartHandler = (item: ICartMeal) => {
@@ -108,6 +113,10 @@ export const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
+  const clearCartHandler = () => {
+    dispatchCartAction({ type: "CLEAR" });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
@@ -116,6 +125,7 @@ export const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({
     onHideCart: hideCartHandler,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler,
   };
 
   return (
